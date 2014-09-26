@@ -204,6 +204,57 @@ function template_process_panels_bootstrap_region(&$variables, $hook) {
 }
 
 /**
+ * Implements hook_preprocess_panels_pane_bootstrap().
+ */
+function template_preprocess_panels_bootstrap_tabs(&$vars, $hook) {
+  $panes = $vars['panes'];
+  $settings = $vars['settings'];
+  $tab_titles = array();
+  $tab_panes = array();
+  $tab_classes = array();
+
+  // Generate tab titles.
+  $i = 0;
+  foreach ($panes as $pane_id => $pane) {
+    if ($i == 0 ) {
+      $output = '<li class="active">';
+      $i++;
+    }
+    else {
+      $output = '<li>';
+      $i++;
+    }
+    $pane_title = &drupal_static($pane_id . '_title');
+    if (empty($pane_title)) {
+      $pane_title = 'This pane needs a title.';
+    }
+    $output .= '<a href="#pane-' . $pane_id . '" data-toggle="tab">' . $pane_title .  '</a>';
+
+    $output .= '</li>';
+    $tab_titles[] = $output;
+  }
+  // Generate tab content.
+  $i = 0;
+  foreach ($panes as $pane_id => $pane) {
+    $content_classes = array('tab-pane');
+    // Add active class.
+    if ($i == 0) {
+      $content_classes[] = 'active';
+      $i++;
+    }
+    $output = '<div id="pane-' . $pane_id . '" class="' . implode(' ', $content_classes) . '">' . $pane . '</div>';
+    $tab_panes[] = $output;
+  }
+
+  $tab_classes[] = 'nav';
+  $tab_classes[] = !empty($settings['tab_type']) ? $settings['tab_type'] : 'nav-tabs';
+
+  $vars['tab_classes'] = implode(' ', $tab_classes);
+  $vars['tab_titles'] = $tab_titles;
+  $vars['tab_panes'] = $tab_panes;
+}
+
+/**
  * Prepares the contextual links for the pane.
  * @param $vars
  * @param $content
