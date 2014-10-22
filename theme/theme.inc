@@ -97,8 +97,8 @@ function template_preprocess_panels_bootstrap_pane(&$vars, $hook) {
   // Add template file suggestion for content type and sub-type.
   $vars['theme_hook_suggestions'][] = $substyle_suggestion;
   $vars['theme_hook_suggestions'][] = $substyle_suggestion . $delimiter .  $content->type;
-  $vars['theme_hook_suggestions'][] = $substyle_suggestion . $delimiter . strtr($content->type, '-', '_') . $delimiter . strtr($content->subtype, '-', '_');
-
+  $theme_hook = $substyle_suggestion . $delimiter . strtr($content->type, '-', '_') . $delimiter . strtr($content->subtype, '-', '_');
+  $vars['theme_hook_suggestions'][] = strtr($theme_hook, ':', $delimiter);
 }
 
 
