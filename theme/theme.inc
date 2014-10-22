@@ -98,7 +98,7 @@ function template_preprocess_panels_bootstrap_pane(&$vars, $hook) {
   $vars['theme_hook_suggestions'][] = $substyle_suggestion;
   $vars['theme_hook_suggestions'][] = $substyle_suggestion . $delimiter .  $content->type;
   $theme_hook = $substyle_suggestion . $delimiter . strtr($content->type, '-', '_') . $delimiter . strtr($content->subtype, '-', '_');
-  $vars['theme_hook_suggestions'][] = strtr($theme_hook, ':', $delimiter);
+  $vars['theme_hook_suggestions'][] = strtr($theme_hook, ':', '_');
 }
 
 
